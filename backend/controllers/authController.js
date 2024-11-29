@@ -7,15 +7,13 @@ const generateToken = (id, role) => {
 };
 
 // Register (Signup) Controller
-exports.registerUser = async (req, res) => {
+const registerUser = async (req, res) => {
   const { name, email, password, role, mobile } = req.body;
 
-  // Validate all fields
   if (!name || !email || !password || !role || !mobile) {
     return res.status(400).json({ message: 'All fields are required, including mobile number.' });
   }
 
-  // Validate role
   const validRoles = ['student', 'corporate', 'college'];
   if (!validRoles.includes(role)) {
     return res.status(400).json({ message: 'Invalid role. Choose student, corporate, or college.' });
@@ -27,14 +25,13 @@ exports.registerUser = async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Create new user
-    const user = await User.create({ name, email, password, role, mobile }); // Include mobile
+    const user = await User.create({ name, email, password, role, mobile });
     res.status(201).json({
       id: user._id,
       name: user.name,
       email: user.email,
       role: user.role,
-      mobile: user.mobile, // Include mobile
+      mobile: user.mobile,
       token: generateToken(user._id, user.role),
     });
   } catch (error) {
@@ -44,10 +41,9 @@ exports.registerUser = async (req, res) => {
 };
 
 // Login (Signin) Controller
-exports.loginUser = async (req, res) => {
+const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  // Validate inputs
   if (!email || !password) {
     return res.status(400).json({ message: 'Email and password are required.' });
   }
@@ -55,13 +51,12 @@ exports.loginUser = async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (user && (await user.matchPassword(password))) {
-      // Send user details along with the token
       res.json({
         id: user._id,
         name: user.name,
         email: user.email,
         role: user.role,
-        mobile: user.mobile, // Include mobile
+        mobile: user.mobile,
         token: generateToken(user._id, user.role),
       });
     } else {
@@ -71,4 +66,54 @@ exports.loginUser = async (req, res) => {
     console.error('Error during login:', error.message);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
+};
+
+// Google Login Controller
+const googleLogin = async (req, res) => {
+  const { email, name, role } = req.body; // Receive role from frontend
+
+  if (!email || !name || !role) {
+    return res.status(400).json({ message: 'Email, name, and role are required.' });
+  }
+
+  const validRoles = ['student', 'corporate', 'college'];
+  if (!validRoles.includes(role)) {
+    return res.status(400).json({ message: 'Invalid role. Choose student, corporate, or college.' });
+  }
+
+  try {
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await User.create({
+        name: name || 'Google User',
+        email,
+        isGoogleUser: true, // Set Google user flag
+        password: '', // Leave password empty for Google users
+        role, // Use the role provided from the frontend
+        mobile: '', // Default empty mobile
+      });
+    }
+
+    const token = generateToken(user._id, user.role);
+
+    res.json({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      mobile: user.mobile,
+      token,
+    });
+  } catch (error) {
+    console.error('Google Login Error:', error.message);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+// Export all controllers
+module.exports = {
+  registerUser,
+  loginUser,
+  googleLogin,
 };

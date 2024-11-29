@@ -50,3 +50,6 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// Add this debug log for Google login
+console.log('Ensure Google Login endpoint is configured at /api/auth/google-login');

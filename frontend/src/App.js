@@ -20,6 +20,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import StudentDashboard from './components/dashboards/StudentDashboard/StudentDashboard';
 import CorporateDashboard from './components/dashboards/CorporateDashboard/CorporateDashboard';
 import CollegeDashboard from './components/dashboards/CollegeDashboard/CollegeDashboard';
+import Sidebar from './components/Sidebar';
 
 const theme = createTheme({
   palette: {
@@ -224,6 +225,7 @@ function App() {
               element={
                 <ProtectedRoute role="student">
                   <StudentDashboard />
+                  <Sidebar />
                 </ProtectedRoute>
               }
             />
@@ -233,6 +235,7 @@ function App() {
               element={
                 <ProtectedRoute role="corporate">
                   <CorporateDashboard />
+                  <Sidebar />
                 </ProtectedRoute>
               }
             />
@@ -242,6 +245,7 @@ function App() {
               element={
                 <ProtectedRoute role="college">
                   <CollegeDashboard />
+                  <Sidebar />
                 </ProtectedRoute>
               }
             />
