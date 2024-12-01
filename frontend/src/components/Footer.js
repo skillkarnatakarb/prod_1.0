@@ -39,7 +39,7 @@ function Footer() {
             >
               <h3 style={{ marginTop: 15}}>Connect Us</h3>
             </Typography>
-            <Box sx={{ marginTop: -5 }}>
+            <Box sx={{ marginTop: 3 }}>
               {/* Social Media Icons */}
               <IconButton
                 component="a"

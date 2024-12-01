@@ -1,0 +1,94 @@
+/* General styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  /* Sidebar styling */
+  .sidebar {
+    width: 200px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    height: 100vh;
+  }
+  
+  .sidebar h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .sidebar .MuiButton-root {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  /* Header styling */
+  .header {
+    background-color: #1976d2;
+    color: white;
+  }
+  
+  .header .MuiToolbar-root {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .header .MuiTypography-root {
+    font-weight: bold;
+  }
+  
+  /* Main content styling */
+  .main-content {
+    padding: 20px;
+  }
+  
+  .main-content .MuiCard-root {
+    margin-bottom: 20px;
+  }
+  
+  /* Domain selection styling */
+  .domain-selection-container {
+    width: 100%;
+    margin-top: 16px;
+  }
+  
+  .horizontal-tabs {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 16px;
+  }
+  
+  .vertical-tabs-container {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .vertical-tabs {
+    border-right: 1px solid #ddd;
+    min-width: 200px;
+  }
+  
+  .vertical-tab-panel {
+    padding: 24px;
+    flex-grow: 1;
+    margin-left: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .tab-panel-header {
+    font-weight: bold;
+    color: #1976d2;
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+  }
+  
+  .tab-panel-content {
+    color: #666;
+    line-height: 1.5;
+  }
+  

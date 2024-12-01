@@ -5,6 +5,11 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/authRoutes'); // Authentication routes
 const roleRoutes = require('./routes/roleRoutes'); // Role-based routes
+const Event = require("./models/Event");
+
+
+const eventRoutes = require("./routes/eventRoutes");
+
 
 const app = express();
 
@@ -17,6 +22,8 @@ connectDB();
 // Middleware
 app.use(cors()); // Enable Cross-Origin Resource Sharing
 app.use(bodyParser.json()); // Parse JSON request bodies
+
+app.use("/api", eventRoutes); // Use event routes under "/api"
 
 // Debug Log: Server initialization
 console.log('Initializing server and setting up routes...');
@@ -44,6 +51,14 @@ app.use((err, req, res, next) => {
     error: err.message,
   });
 });
+
+
+
+
+
+
+
+
 
 // Start the server
 const PORT = process.env.PORT || 5000;
