@@ -1,22 +1,27 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Sidebar from './CorporateComponents/Sidebar';
 import Header from './CorporateComponents/Header';
 import MainContent from './CorporateComponents/MainContent';
-import ScheduleCalender from './CorporateComponents/ScheduleCalender';
 import DomainSelection from './CorporateComponents/DomainSelection';
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CorporateDashboard = () => (
   <div style={{ display: 'flex', minHeight: '100vh' }}>
     <Sidebar />
     <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
       <Header />
-      <main style={{ padding: '20px' }}>
-        <Routes>
-          <Route path="" element={<MainContent />} /> {/* Default route for Corporate Dashboard */}
-          <Route path="calendar" element={<ScheduleCalender />} />
-          <Route path="domain-selection" element={<DomainSelection />} />
-        </Routes>
+      <main className="main-content">
+      <Routes>
+            <Route path="/" element={<Navigate to="/corporate-dashboard/schedule" />} />
+            <Route path="schedule" element={<MainContent currentTab="schedule" />} />
+            <Route path="scheduled-interviews" element={<MainContent currentTab="scheduled-interviews" />} />
+            <Route path="domain-selection" element={<DomainSelection />} />
+      </Routes>
+
+        <ToastContainer />
       </main>
     </div>
   </div>

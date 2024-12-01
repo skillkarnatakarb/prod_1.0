@@ -22,6 +22,9 @@ import CorporateDashboard from './components/dashboards/CorporateDashboard/Corpo
 import CollegeDashboard from './components/dashboards/CollegeDashboard/CollegeDashboard';
 import Sidebar from './components/Sidebar';
 
+import "./styles/corporate.css";
+
+
 const theme = createTheme({
   palette: {
     primary: { main: '#1976d2' },
@@ -231,7 +234,7 @@ function App() {
             />
 
             <Route
-              path="/corporate-dashboard"
+              path="/corporate-dashboard/*"
               element={
                 <ProtectedRoute role="corporate">
                   <CorporateDashboard />
