@@ -7,9 +7,15 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => (
   <div className="sidebar">
-    <h2>Dashboard</h2>
+    <h2>Skill Karnataka</h2>
     
     <List>
+      <ListItem>
+        <Button component={Link} to="/corporate-dashboard/create-interview" variant="outlined">
+          Create Interview
+        </Button>
+      </ListItem>
+
       <ListItem>
         <Button component={Link} to="/corporate-dashboard/schedule" variant="outlined">
           Schedule
@@ -21,10 +27,21 @@ const Sidebar = () => (
         </Button>
       </ListItem>
       <ListItem>
-        <Button component={Link} to="/corporate-dashboard/domain-selection" variant="outlined">
-          Domain Selection
+        <Button component={Link} to="#" variant="outlined">
+          View Results
         </Button>
       </ListItem>
+      <ListItem>
+        <Button component={Link} to="#" variant="outlined">
+          Create 1:1 Interview
+        </Button>
+      </ListItem>
+      <ListItem>
+        <Button component={Link} to="#" variant="outlined">
+          Repository
+        </Button>
+      </ListItem>
+      
     </List>
 
 

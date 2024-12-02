@@ -18,7 +18,7 @@ const CorporateDashboard = () => (
             <Route path="/" element={<Navigate to="/corporate-dashboard/schedule" />} />
             <Route path="schedule" element={<MainContent currentTab="schedule" />} />
             <Route path="scheduled-interviews" element={<MainContent currentTab="scheduled-interviews" />} />
-            <Route path="domain-selection" element={<DomainSelection />} />
+            <Route path="create-interview" element={<DomainSelection />} />
       </Routes>
 
         <ToastContainer />
