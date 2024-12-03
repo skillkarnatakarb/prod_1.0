@@ -37,27 +37,27 @@ const Sidebar = () => {
       <List>
         <ListItem button onClick={() => navigate("/profile")}>
           <ListItemIcon>
-            <AccountCircleIcon />
+            <AccountCircleIcon sx={{ color: "#000", fontSize: 30 }} />
           </ListItemIcon>
-          <ListItemText primary="Profile" />
+          <ListItemText primary="Profile" sx={{ color: "#000" }} />
         </ListItem>
         <ListItem button onClick={() => navigate("/notifications")}>
           <ListItemIcon>
-            <NotificationsIcon />
+            <NotificationsIcon sx={{ color: "#000", fontSize: 30 }} />
           </ListItemIcon>
-          <ListItemText primary="Notifications" />
+          <ListItemText primary="Notifications" sx={{ color: "#000" }} />
         </ListItem>
         <ListItem button onClick={() => navigate("/settings")}>
           <ListItemIcon>
-            <SettingsIcon />
+            <SettingsIcon sx={{ color: "#000", fontSize: 30 }} />
           </ListItemIcon>
-          <ListItemText primary="Settings" />
+          <ListItemText primary="Settings" sx={{ color: "#000" }} />
         </ListItem>
         <ListItem button onClick={handleLogout}>
           <ListItemIcon>
-            <LogoutIcon />
+            <LogoutIcon sx={{ color: "#000", fontSize: 30 }} />
           </ListItemIcon>
-          <ListItemText primary="Logout" />
+          <ListItemText primary="Logout" sx={{ color: "#000" }} />
         </ListItem>
       </List>
     </Box>
@@ -74,26 +74,40 @@ const Sidebar = () => {
           zIndex: (theme) => theme.zIndex.drawer + 1,
         }}
       >
-        <Toolbar sx={{ padding: "0 16px", position: "relative", float: "right" }}>
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "0 16px",
+          }}
+        >
           {/* Logo */}
           <Box
             component="img"
-            src="/Assets/sklogo.png" // Replace with the correct logo file name
+            src="/Assets/amazon.png" // Correct path
             alt="Logo"
-            sx={{ height: 50, cursor: "pointer" }}
-            onClick={() => navigate("/dashboard-home")}
+            sx={{
+              height: 50, // Adjust height if needed
+              width: "auto", // Preserve aspect ratio
+              cursor: "pointer",
+              display: "block",
+              backgroundColor: "#ddd",
+            }}
+            onClick={() => navigate("/corporate-dashboard/schedule")}
           />
+
+
           {/* Menu Button */}
           <IconButton
             color="inherit"
             edge="end"
             onClick={handleDrawerToggle}
             sx={{
-              position: "absolute",
-              right: 16, // Ensures the hamburger icon is on the far right
+              fontSize: 30,
+              color: "#000",
             }}
           >
-            <MenuIcon sx={{ fontSize: 30, color: "#000" }} />
+            <MenuIcon />
           </IconButton>
         </Toolbar>
       </AppBar>

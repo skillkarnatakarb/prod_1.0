@@ -4,6 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button'; // Import Button for the "Create Interview" button
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -16,7 +17,16 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box style={{ padding: '24px', flexGrow: 1, marginLeft: '20px', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f9f9f9' }}>
+        <Box
+          style={{
+            padding: '24px',
+            flexGrow: 1,
+            marginLeft: '20px',
+            border: '1px solid #ddd',
+            borderRadius: '8px',
+            backgroundColor: '#f9f9f9',
+          }}
+        >
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -50,16 +60,27 @@ export default function DomainSelection() {
     setVerticalValue(newValue);
   };
 
+  const handleCreateInterview = (role) => {
+    alert(`Create Interview for: ${role}`);
+    // Add your logic here, e.g., navigate to a form or call an API
+  };
+
   const verticalTabContent = [
-    ["Full Stack Developer", "Backend Engineer", "Frontend Engineer"],
-    ["Support Role", "Customer Success", "Technical Support"],
-    ["Data Entry", "Document Control", "Operations"]
+    ['Full Stack Developer', 'Backend Engineer', 'Frontend Engineer'],
+    ['Support Role', 'Customer Success', 'Technical Support'],
+    ['Data Entry', 'Document Control', 'Operations'],
   ];
 
   return (
     <Box style={{ width: '100%', marginTop: '16px' }}>
       <Box style={{ borderBottom: '1px solid #ddd', marginBottom: '16px' }}>
-        <Tabs value={horizontalValue} onChange={handleHorizontalChange} aria-label="domain selection tabs" centered variant="fullWidth">
+        <Tabs
+          value={horizontalValue}
+          onChange={handleHorizontalChange}
+          aria-label="domain selection tabs"
+          centered
+          variant="fullWidth"
+        >
           <Tab label="Technical" {...a11yProps(0)} />
           <Tab label="Non-Technical" {...a11yProps(1)} />
           <Tab label="Non-IT" {...a11yProps(2)} />
@@ -80,13 +101,43 @@ export default function DomainSelection() {
                 <Tab key={verticalIndex} label={label} {...a11yProps(verticalIndex)} />
               ))}
             </Tabs>
-            <Box style={{ padding: '24px', flexGrow: 1, marginLeft: '20px', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f9f9f9' }}>
+            <Box
+              style={{
+                padding: '24px',
+                flexGrow: 1,
+                marginLeft: '20px',
+                border: '1px solid #ddd',
+                borderRadius: '8px',
+                backgroundColor: '#f9f9f9',
+              }}
+            >
               {contentArray.map((content, verticalIndex) => (
                 <TabPanel value={verticalValue} index={verticalIndex} key={verticalIndex}>
-                  <Typography variant="h6" style={{ fontWeight: 'bold', color: '#1976d2', marginBottom: '8px', fontSize: '1.2rem' }}>{content}</Typography>
-                  <Typography variant="body1" style={{ color: '#666', lineHeight: '1.5' }}>
-                    This section contains detailed information about the {content} role. Here you can add specific details relevant to this position.
+                  <Typography
+                    variant="h6"
+                    style={{
+                      fontWeight: 'bold',
+                      color: '#1976d2',
+                      marginBottom: '8px',
+                      fontSize: '1.2rem',
+                    }}
+                  >
+                    {content}
                   </Typography>
+                  <Typography
+                    variant="body1"
+                    style={{ color: '#666', lineHeight: '1.5', marginBottom: '16px' }}
+                  >
+                    This section contains detailed information about the {content} role. Here you can add
+                    specific details relevant to this position.
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleCreateInterview(content)}
+                  >
+                    Create Interview
+                  </Button>
                 </TabPanel>
               ))}
             </Box>

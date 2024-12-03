@@ -88,6 +88,8 @@ const EventComponent = ({ onAddEvent }) => {
         Add Event
       </Button>
 
+
+
       {/* Modal for adding event */}
       <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
         <DialogTitle>Add New Event</DialogTitle>
