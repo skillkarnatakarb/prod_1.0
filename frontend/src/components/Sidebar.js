@@ -21,6 +21,7 @@ const drawerWidth = 240;
 
 const Sidebar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [active, setActive] = useState(""); // To track the active button
   const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
@@ -28,6 +29,7 @@ const Sidebar = () => {
   };
 
   const handleLogout = () => {
+    setActive(""); // Clear active state on logout
     localStorage.clear();
     navigate("/");
   };
@@ -35,30 +37,48 @@ const Sidebar = () => {
   const drawerContent = (
     <Box sx={{ width: drawerWidth, p: 2 }}>
       <List>
-        <ListItem button onClick={() => navigate("/profile")}>
-          <ListItemIcon>
-            <AccountCircleIcon sx={{ color: "#000", fontSize: 30 }} />
-          </ListItemIcon>
-          <ListItemText primary="Profile" sx={{ color: "#000" }} />
-        </ListItem>
-        <ListItem button onClick={() => navigate("/notifications")}>
-          <ListItemIcon>
-            <NotificationsIcon sx={{ color: "#000", fontSize: 30 }} />
-          </ListItemIcon>
-          <ListItemText primary="Notifications" sx={{ color: "#000" }} />
-        </ListItem>
-        <ListItem button onClick={() => navigate("/settings")}>
-          <ListItemIcon>
-            <SettingsIcon sx={{ color: "#000", fontSize: 30 }} />
-          </ListItemIcon>
-          <ListItemText primary="Settings" sx={{ color: "#000" }} />
-        </ListItem>
-        <ListItem button onClick={handleLogout}>
-          <ListItemIcon>
-            <LogoutIcon sx={{ color: "#000", fontSize: 30 }} />
-          </ListItemIcon>
-          <ListItemText primary="Logout" sx={{ color: "#000" }} />
-        </ListItem>
+        {[
+          { text: "Profile", icon: <AccountCircleIcon />, path: "/profile" },
+          { text: "Notifications", icon: <NotificationsIcon />, path: "/notifications" },
+          { text: "Settings", icon: <SettingsIcon />, path: "/settings" },
+          { text: "Logout", icon: <LogoutIcon />, action: handleLogout },
+        ].map((item, index) => (
+          <ListItem
+            button
+            key={index}
+            onClick={() => {
+              setActive(item.text); // Set active item
+              if (item.path) {
+                navigate(item.path);
+              } else if (item.action) {
+                item.action();
+              }
+            }}
+            sx={{
+              backgroundColor: active === item.text ? "#f0f0f0" : "transparent", // Active background color
+              "&:hover": {
+                backgroundColor: active === item.text ? "#f0f0f0" : "#e0e0e0", // Hover behavior
+              },
+              borderRadius: "8px",
+              mb: 1,
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                color: active === item.text ? "#1976d2" : "#000", // Active icon color
+                fontSize: 30,
+              }}
+            >
+              {item.icon}
+            </ListItemIcon>
+            <ListItemText
+              primary={item.text}
+              sx={{
+                color: active === item.text ? "#1976d2" : "#000", // Active text color
+              }}
+            />
+          </ListItem>
+        ))}
       </List>
     </Box>
   );
@@ -95,7 +115,6 @@ const Sidebar = () => {
             }}
             onClick={() => navigate("/corporate-dashboard/schedule")}
           />
-
 
           {/* Menu Button */}
           <IconButton
