@@ -7,6 +7,7 @@ import UploadProjects from "./StudentComponents/UploadProjects";
 import ApplyForInternships from "./StudentComponents/ApplyForInternships";
 import GetCounseling from "./StudentComponents/GetCounseling";
 import Profile from "./StudentComponents/Profile";
+import ApplyForInternship from "./StudentComponents/ApplyForInternships";
 import "./StudentDashboard.css";
 
 
