@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/Form.css";
 
-
 const Signup = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -26,8 +25,8 @@ const Signup = () => {
     setSuccess("");
     try {
       await axios.post("http://localhost:5000/api/auth/register", formData);
-      setSuccess("Signup successful! Redirecting to login...");
-      setTimeout(() => navigate("/"), 2000);
+      setSuccess("Signup successful! Redirecting to sign in...");
+      setTimeout(() => navigate("/signin"), 2000);
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong!");
     }
@@ -35,7 +34,6 @@ const Signup = () => {
 
   return (
     <div>
-      
       <div className="card-container">
         <h2>Create Your Account</h2>
         <form onSubmit={handleSubmit}>
@@ -95,7 +93,7 @@ const Signup = () => {
             Sign Up
           </button>
           <p className="form-text">
-            Already have an account? <a href="/">Sign in</a>
+            Already have an account? <a href="/signin">Sign in</a>
           </p>
           {success && <p className="success-message">{success}</p>}
           {error && <p className="error-message">{error}</p>}

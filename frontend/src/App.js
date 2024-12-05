@@ -25,6 +25,8 @@ import Sidebar from './components/Sidebar';
 import "./styles/corporate.css";
 
 
+
+
 const theme = createTheme({
   palette: {
     primary: { main: '#1976d2' },
@@ -226,7 +228,7 @@ function App() {
             <Route
               path="/student-dashboard"
               element={
-                <ProtectedRoute role="student">
+                <ProtectedRoute allowedRoles={["student"]}>
                   <StudentDashboard />
                   <Sidebar />
                 </ProtectedRoute>
@@ -236,7 +238,7 @@ function App() {
             <Route
               path="/corporate-dashboard/*"
               element={
-                <ProtectedRoute role="corporate">
+                <ProtectedRoute allowedRoles={["corporate"]}>
                   <CorporateDashboard />
                   <Sidebar />
                 </ProtectedRoute>
@@ -246,7 +248,7 @@ function App() {
             <Route
               path="/college-dashboard"
               element={
-                <ProtectedRoute role="college">
+                <ProtectedRoute allowedRoles={["college"]}>
                   <CollegeDashboard />
                   <Sidebar />
                 </ProtectedRoute>
