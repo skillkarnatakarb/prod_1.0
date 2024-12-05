@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 import Header from './components/Header';
 import Section1 from './components/Section1';
@@ -24,9 +24,6 @@ import Sidebar from './components/Sidebar';
 
 import "./styles/corporate.css";
 
-
-
-
 const theme = createTheme({
   palette: {
     primary: { main: '#1976d2' },
@@ -37,6 +34,8 @@ const theme = createTheme({
 function App() {
   const [showPopup, setShowPopup] = useState(false);
   const [showButton, setShowButton] = useState(true);
+
+  const location = useLocation();
 
   // Refs for smooth scrolling
   const section2Ref = useRef(null);
@@ -58,6 +57,10 @@ function App() {
     section2Ref.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // List of dashboard routes
+  const dashboardRoutes = ["/student-dashboard", "/corporate-dashboard", "/college-dashboard"];
+  const isDashboard = dashboardRoutes.some((route) => location.pathname.startsWith(route));
+
   return (
     <ThemeProvider theme={theme}>
       {/* Curtain Raiser Popup */}
@@ -69,7 +72,7 @@ function App() {
             left: 0,
             width: '100%',
             height: '100%',
-            backgroundImage:'/beta/Assets/bglaunch.png',
+            backgroundImage: '/beta/Assets/bglaunch.png',
             zIndex: 9999,
             display: 'flex',
             alignItems: 'center',
@@ -78,20 +81,19 @@ function App() {
             color: '#fff',
           }}
         >
-
           <h1 style={{ marginBottom: '20px', fontSize: '2rem', color: 'yellow' }}>
             LAUNCH OF SKILL KARNATAKA
-            </h1>
-            <p style={{ textAlign: 'center', color: 'white' }}>An Initiative By "RankBook"</p>
-            <p style={{ textAlign: 'center', color: 'yellow' }}>(Your Skilling & Hiring Partner)</p>
+          </h1>
+          <p style={{ textAlign: 'center', color: 'white' }}>An Initiative By "RankBook"</p>
+          <p style={{ textAlign: 'center', color: 'yellow' }}>(Your Skilling & Hiring Partner)</p>
 
-          <h1 style={{ marginBottom: '20px', fontSize: '2rem',color:'#FD9E0B', textAlign: 'center' }}>LAUNCH OF SKILL KARNATAKA  <p style={{ textAlign: 'center', color:'#9A6108' }}>Inauguration by our <br></br>Honorable Deputy Chief Minister <br></br>Dr. D K ShivKumar</p>
-
-
+          <h1 style={{ marginBottom: '20px', fontSize: '2rem', color: '#FD9E0B', textAlign: 'center' }}>
+            LAUNCH OF SKILL KARNATAKA
+            <p style={{ textAlign: 'center', color: '#9A6108' }}>
+              Inauguration by our <br></br>Honorable Deputy Chief Minister <br></br>Dr. D K ShivKumar
+            </p>
           </h1>
           {showButton && (
-            
-
             <button
               onClick={handleVideoPlay}
               style={{
@@ -100,7 +102,7 @@ function App() {
                 backgroundColor: '#9A6108', // Button color
                 color: '#fff',
                 border: 'none',
-                borderRadius: '12px', // Rounded corners
+                borderRadius: '12px',
                 cursor: 'pointer',
                 fontWeight: 'bold',
                 width: 'fit-content', // Ensures button width adjusts to content
@@ -120,11 +122,6 @@ function App() {
             >
               Grand Launch
             </button>
-
-
-
-
-
           )}
           <video
             id="curtainVideo"
@@ -133,15 +130,14 @@ function App() {
             onEnded={handleVideoEnd}
             controls={false}
             autoPlay={false}
-          >
-          </video>
+          ></video>
         </div>
       )}
 
       {/* Main Application Content */}
       {!showPopup && (
         <>
-          <Header />
+          {!isDashboard && <Header />}
           <Routes>
             <Route
               path="/"
@@ -162,23 +158,7 @@ function App() {
                       overflow: 'hidden',
                       boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                     }}
-                  >
-                    <style>
-                      {`
-                        @media (max-width: 768px) {
-                          .responsive-image-container {
-                            width: 100%;
-                            height: 250px;
-                          }
-                        }
-                        @media (max-width: 400px) {
-                          .responsive-image-container {
-                            height: 200px;
-                          }
-                        }
-                      `}
-                    </style>
-                  </div>
+                  ></div>
 
                   {/* Sections */}
                   <section id="section1">
@@ -229,8 +209,10 @@ function App() {
               path="/student-dashboard"
               element={
                 <ProtectedRoute allowedRoles={["student"]}>
-                  <StudentDashboard />
-                  <Sidebar />
+                  <>
+                    <Sidebar role="student" />
+                    <StudentDashboard />
+                  </>
                 </ProtectedRoute>
               }
             />
@@ -239,8 +221,10 @@ function App() {
               path="/corporate-dashboard/*"
               element={
                 <ProtectedRoute allowedRoles={["corporate"]}>
-                  <CorporateDashboard />
-                  <Sidebar />
+                  <>
+                    <Sidebar role="corporate" />
+                    <CorporateDashboard />
+                  </>
                 </ProtectedRoute>
               }
             />
@@ -249,8 +233,10 @@ function App() {
               path="/college-dashboard"
               element={
                 <ProtectedRoute allowedRoles={["college"]}>
-                  <CollegeDashboard />
-                  <Sidebar />
+                  <>
+                    <Sidebar role="college" />
+                    <CollegeDashboard />
+                  </>
                 </ProtectedRoute>
               }
             />
