@@ -1,263 +1,320 @@
-import React, { useState } from 'react';
-import {
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Card,
-  CardContent,
-  Tabs,
-  Tab,
-  MenuItem,
-  Chip,
-  Grid,
-} from '@mui/material';
+import React, { useState } from "react";
+import "../StudentDashboard.css";
 
 const Profile = () => {
-  const [value, setValue] = useState(0);
-  const [userData, setUserData] = useState({
-    name: '',
-    phno: '',
-    email: '',
-    gender: '',
-    college: '',
-    education: '',
-    specialization: '',
-    yearOfPassing: '',
-    skills: [],
-    resumeLink: '',
-    linkedinLink: '',
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    dob: "",
+    gender: "Male",
+    phoneNumber: "",
+    email: "",
+    address: "",
+    city: "",
+    district: "",
+    state: "",
+    pincode: "",
+    qualification: "",
+    specialization: "",
+    collegeName: "",
+    yearOfPassing: "",
+    github: "",
+    linkedin: "",
+    twitter: "",
+    resume: "",
   });
 
-  const [skillInput, setSkillInput] = useState('');
-
-  const handleTabChange = (event, newValue) => {
-    setValue(newValue);
+  const states = {
+    Maharashtra: ["Mumbai", "Pune"],
+    Gujarat: ["Ahmedabad", "Surat"],
+    Karnataka: ["Bengaluru", "Mysuru"],
+    TamilNadu: ["Chennai", "Coimbatore"],
   };
+  
+  const districts = {
+    Maharashtra: ["Mumbai District", "Pune District"],
+    Gujarat: ["Ahmedabad District", "Surat District"],
+    Karnataka: ["Bengaluru District", "Mysuru District"],
+    TamilNadu: ["Chennai District", "Coimbatore District"],
+  };
+  
+  const cities = {
+    "Mumbai District": ["Andheri", "Borivali", "Dadar"],
+    "Pune District": ["Shivajinagar", "Kothrud", "Hadapsar"],
+    "Ahmedabad District": ["Navrangpura", "Maninagar"],
+    "Surat District": ["Adajan", "Katargam"],
+    "Bengaluru District": ["Whitefield", "Indiranagar"],
+    "Mysuru District": ["Jayalakshmipuram", "Vijayanagar"],
+    "Chennai District": ["T. Nagar", "Guindy"],
+    "Coimbatore District": ["RS Puram", "Ganapathy"],
+  };
+  
+  
+
+  const qualifications = {
+    BCA: ["Computer Science", "IT"],
+    BSc: ["PCM", "PCB", "EMCS"],
+    BBA: ["Finance", "Marketing", "HR"],
+    BCom: ["Accounting", "Taxation", "Banking"],
+  };
+
 
   const handleChange = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
-  };
-
-  const handleAddSkill = () => {
-    if (skillInput.trim() && !userData.skills.includes(skillInput)) {
-      setUserData({ ...userData, skills: [...userData.skills, skillInput.trim()] });
-      setSkillInput('');
-    }
-  };
-
-  const handleDeleteSkill = (skillToDelete) => {
-    setUserData({
-      ...userData,
-      skills: userData.skills.filter((skill) => skill !== skillToDelete),
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
     });
   };
 
-  const handleProfileUpdate = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    alert('Profile updated successfully!');
+    console.log("Form Data Submitted: ", formData);
   };
 
-  const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 30 }, (_, index) => currentYear - index);
-
   return (
-    <div style={{ padding: '20px' }}>
-      <Typography variant="h4" gutterBottom>
-        User Profile
-      </Typography>
-
-      <Tabs value={value} onChange={handleTabChange} centered>
-        <Tab label="Edit Profile" />
-        <Tab label="Links" />
-      </Tabs>
-
-      <Box
-        sx={{
-          maxWidth: '1500px', // Increase form width
-          margin: '0 auto',
-          padding: '20px',
-          backgroundColor: '#f9f9f9',
-          borderRadius: '8px',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-        }}
-      >
-        {value === 0 ? (
-          <form onSubmit={handleProfileUpdate}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Name"
-                  name="name"
-                  value={userData.name}
-                  onChange={handleChange}
-                  fullWidth
-                  required
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Phone Number"
-                  name="phno"
-                  value={userData.phno}
-                  onChange={handleChange}
-                  fullWidth
-                  required
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Email"
-                  name="email"
-                  value={userData.email}
-                  onChange={handleChange}
-                  fullWidth
-                  required
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  select
-                  label="Gender"
-                  name="gender"
-                  value={userData.gender}
-                  onChange={handleChange}
-                  fullWidth
-                  required
-                >
-                  <MenuItem value="male">Male</MenuItem>
-                  <MenuItem value="female">Female</MenuItem>
-                  <MenuItem value="other">Other</MenuItem>
-                </TextField>
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="College Name"
-                  name="college"
-                  value={userData.college}
-                  onChange={handleChange}
-                  fullWidth
-                  required
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  select
-                  label="Education"
-                  name="education"
-                  value={userData.education}
-                  onChange={handleChange}
-                  fullWidth
-                  required
-                >
-                  <MenuItem value="bca">BCA</MenuItem>
-                  <MenuItem value="bsc">BSc</MenuItem>
-                  <MenuItem value="bcom">BCom</MenuItem>
-                  <MenuItem value="be">BE</MenuItem>
-                  <MenuItem value="bba">BBA</MenuItem>
-                  <MenuItem value="mca">MCA</MenuItem>
-                  <MenuItem value="mba">MBA</MenuItem>
-                  <MenuItem value="mcom">MCom</MenuItem>
-                  <MenuItem value="msw">MSW</MenuItem>
-                  <MenuItem value="msc">MSc</MenuItem>
-                </TextField>
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  select
-                  label="Year of Passing"
-                  name="yearOfPassing"
-                  value={userData.yearOfPassing}
-                  onChange={handleChange}
-                  fullWidth
-                  required
-                >
-                  {years.map((year) => (
-                    <MenuItem key={year} value={year}>
-                      {year}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                {/* Smaller specialization field */}
-                <TextField
-                  label="Specialization"
-                  name="specialization"
-                  value={userData.specialization}
-                  onChange={handleChange}
-                  fullWidth
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <Box display="flex" gap="10px" alignItems="center">
-                  <TextField
-                    label="Add Skill"
-                    value={skillInput}
-                    onChange={(e) => setSkillInput(e.target.value)}
-                    fullWidth
-                  />
-                  <Button variant="contained" color="primary" onClick={handleAddSkill}>
-                    Add
-                  </Button>
-                </Box>
-                <Box display="flex" gap="8px" flexWrap="wrap" marginTop="10px">
-                  {userData.skills.map((skill) => (
-                    <Chip
-                      key={skill}
-                      label={skill}
-                      onDelete={() => handleDeleteSkill(skill)}
-                      color="primary"
-                    />
-                  ))}
-                </Box>
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              style={{ marginTop: '20px' }}
+    <div className="profile-container">
+      <form onSubmit={handleSubmit} className="profile-form">
+        <h2>Personal Details</h2>
+        <div className="form-row">
+          <div className="form-group">
+            <label>First Name:</label>
+            <input
+              type="text"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Last Name:</label>
+            <input
+              type="text"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form-group">
+            <label>Date of Birth:</label>
+            <input
+              type="date"
+              name="dob"
+              value={formData.dob}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group gender-group">
+            <label>Gender:</label>
+            <select
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
             >
-              Update Profile
-            </Button>
-          </form>
-        ) : (
-          <form onSubmit={handleProfileUpdate}>
-            <Box display="flex" flexDirection="column" gap="16px">
-              <TextField
-                label="Resume Link"
-                name="resumeLink"
-                value={userData.resumeLink}
-                onChange={handleChange}
-                fullWidth
-                required
-              />
-              <TextField
-                label="LinkedIn Link"
-                name="linkedinLink"
-                value={userData.linkedinLink}
-                onChange={handleChange}
-                fullWidth
-                required
-              />
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                style={{ marginTop: '10px' }}
-              >
-                Update Links
-              </Button>
-            </Box>
-          </form>
-        )}
-      </Box>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <h2>Contact Details</h2>
+        <div className="form-row">
+          <div className="form-group">
+            <label>Phone Number:</label>
+            <input
+              type="text"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Email:</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <h2>Address</h2>
+<div className="form-row">
+  <div className="form-group">
+    <label>Address:</label>
+    <input
+      type="text"
+      name="address"
+      value={formData.address}
+      onChange={handleChange}
+    />
+  </div>
+</div>
+<div className="form-row">
+  <div className="form-group">
+    <label>State:</label>
+    <select
+      name="state"
+      value={formData.state}
+      onChange={handleChange}
+    >
+      <option value="">Select State</option>
+      {Object.keys(states).map((state) => (
+        <option key={state} value={state}>
+          {state}
+        </option>
+      ))}
+    </select>
+  </div>
+  <div className="form-group">
+    <label>District:</label>
+    <select
+      name="district"
+      value={formData.district}
+      onChange={handleChange}
+      disabled={!formData.state} // Disable if state is not selected
+    >
+      <option value="">Select District</option>
+      {(districts[formData.state] || []).map((district) => (
+        <option key={district} value={district}>
+          {district}
+        </option>
+      ))}
+    </select>
+  </div>
+</div>
+<div className="form-row">
+  <div className="form-group">
+    <label>City:</label>
+    <select
+      name="city"
+      value={formData.city}
+      onChange={handleChange}
+      disabled={!formData.district} // Disable if district is not selected
+    >
+      <option value="">Select City</option>
+      {(cities[formData.district] || []).map((city) => (
+        <option key={city} value={city}>
+          {city}
+        </option>
+      ))}
+    </select>
+  </div>
+  <div className="form-group">
+    <label>Pincode:</label>
+    <input
+      type="text"
+      name="pincode"
+      value={formData.pincode}
+      onChange={handleChange}
+    />
+  </div>
+</div>
+
+        <h2>Education</h2>
+        <div className="form-row">
+          <div className="form-group">
+            <label>Qualification:</label>
+            <select
+              name="qualification"
+              value={formData.qualification}
+              onChange={handleChange}
+            >
+              <option value="">Select Qualification</option>
+              {Object.keys(qualifications).map((qual) => (
+                <option key={qual} value={qual}>
+                  {qual}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Specialization:</label>
+            <select
+              name="specialization"
+              value={formData.specialization}
+              onChange={handleChange}
+            >
+              <option value="">Select Specialization</option>
+              {(qualifications[formData.qualification] || []).map((spec) => (
+                <option key={spec} value={spec}>
+                  {spec}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form-group">
+            <label>College Name:</label>
+            <input
+              type="text"
+              name="collegeName"
+              value={formData.collegeName}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Year of Passing:</label>
+            <input
+              type="text"
+              name="yearOfPassing"
+              value={formData.yearOfPassing}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <h2>Social Links</h2>
+        <div className="form-row">
+          <div className="form-group">
+            <label>GitHub:</label>
+            <input
+              type="url"
+              name="github"
+              value={formData.github}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>LinkedIn:</label>
+            <input
+              type="url"
+              name="linkedin"
+              value={formData.linkedin}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form-group">
+            <label>Twitter:</label>
+            <input
+              type="url"
+              name="twitter"
+              value={formData.twitter}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Resume (URL):</label>
+            <input
+              type="url"
+              name="resume"
+              value={formData.resume}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <button type="submit" className="submit-btn">
+          Submit
+        </button>
+      </form>
     </div>
   );
 };
