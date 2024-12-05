@@ -1,28 +1,32 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode'; // Correctly import as named export
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode"; // Correct import
 
-const ProtectedRoute = ({ children, role }) => {
-  const token = localStorage.getItem('token');
-
-  if (!token) {
-    return <Navigate to="/signin" replace />;
-  }
-
+const isTokenValid = (token) => {
   try {
-    const decoded = jwtDecode(token); // Use jwtDecode here
-
-    // Check if the user's role matches the required role
-    if (decoded.role !== role) {
-      console.warn(`Access denied: User role (${decoded.role}) does not match required role (${role}).`);
-      return <Navigate to="/" replace />;
-    }
-
-    return children;
+    const decoded = jwtDecode(token); // Decode the token
+    return decoded.exp * 1000 > Date.now(); // Check if the token has expired
   } catch (error) {
-    console.error('Token decoding failed:', error.message);
+    console.error("Invalid token:", error.message);
+    return false;
+  }
+};
+
+const ProtectedRoute = ({ children, allowedRoles = [] }) => {
+  const token = localStorage.getItem("token");
+  const userRole = localStorage.getItem("role");
+
+  if (!token || !isTokenValid(token)) {
+    console.error("Invalid or expired token.");
     return <Navigate to="/signin" replace />;
   }
+
+  if (!allowedRoles.includes(userRole)) {
+    console.error(`Access denied: User role (${userRole}) not in allowed roles (${allowedRoles}).`);
+    return <Navigate to="/signin" replace />;
+  }
+
+  return children;
 };
 
 export default ProtectedRoute;

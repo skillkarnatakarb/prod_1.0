@@ -1,12 +1,14 @@
 const express = require('express');
-const { registerUser, loginUser } = require('../controllers/authController');
-
 const router = express.Router();
+const { googleLogin, registerUser, loginUser } = require('../controllers/authController'); // Correct path to `authController.js`
 
-// Signup Route
-router.post('/register', registerUser); // Correctly defined route
+// Register (Signup) route
+router.post('/register', registerUser);
 
-// Signin Route
+// Login (Signin) route
 router.post('/signin', loginUser);
+
+// Google Login route
+router.post('/google-login', googleLogin);
 
 module.exports = router;
