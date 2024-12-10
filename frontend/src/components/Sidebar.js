@@ -13,6 +13,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SettingsIcon from "@mui/icons-material/Settings";
+import ContactMailIcon from "@mui/icons-material/ContactMail"; // Import ContactMailIcon
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
 
@@ -24,19 +25,22 @@ const Sidebar = ({ role }) => {
 
   const menuItems = {
     student: [
-      { text: "My Courses", path: "/student-dashboard/courses", icon: <AccountCircleIcon /> },
-      { text: "Notifications", path: "/student-dashboard/notifications", icon: <NotificationsIcon /> },
-      { text: "Settings", path: "/student-dashboard/settings", icon: <SettingsIcon /> },
+      { text: "Student Profile", path: "/student-dashboard/Student_profile", icon: <AccountCircleIcon /> },
+      { text: "Notification", path: "/student-dashboard/Notification", icon: <NotificationsIcon /> },
+      { text: "Settings", path: "/student-dashboard/Settings", icon: <SettingsIcon /> },
+      { text: "Contact Us", path: "/student-dashboard/ContactUs", icon: <ContactMailIcon /> },
     ],
     corporate: [
-      { text: "Job Postings", path: "/corporate-dashboard/jobs", icon: <AccountCircleIcon /> },
-      { text: "Notifications", path: "/corporate-dashboard/notifications", icon: <NotificationsIcon /> },
-      { text: "Settings", path: "/corporate-dashboard/settings", icon: <SettingsIcon /> },
+      { text: "Corporate Profile", path: "/corporate-dashboard/Corporate_profile", icon: <AccountCircleIcon /> },
+      { text: "Notification", path: "/corporate-dashboard/Notification", icon: <NotificationsIcon /> },
+      { text: "Settings", path: "/corporate-dashboard/Settings", icon: <SettingsIcon /> },
+      { text: "Contact Us", path: "/corporate-dashboard/ContactUs", icon: <ContactMailIcon /> },
     ],
     college: [
-      { text: "Placements", path: "/college-dashboard/placements", icon: <AccountCircleIcon /> },
-      { text: "Notifications", path: "/college-dashboard/notifications", icon: <NotificationsIcon /> },
-      { text: "Settings", path: "/college-dashboard/settings", icon: <SettingsIcon /> },
+      { text: "College Profile", path: "/college-dashboard/College_profile", icon: <AccountCircleIcon /> },
+      { text: "Notification", path: "/college-dashboard/Notification", icon: <NotificationsIcon /> },
+      { text: "Settings", path: "/college-dashboard/Settings", icon: <SettingsIcon /> },
+      { text: "Contact Us", path: "/college-dashboard/ContactUs", icon: <ContactMailIcon /> },
     ],
   };
 

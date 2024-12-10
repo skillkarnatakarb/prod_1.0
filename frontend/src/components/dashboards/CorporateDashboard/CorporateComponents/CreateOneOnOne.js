@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 const CreateOneOnOne = () => {
-  // Dummy data for selected candidates
   const [selectedStudents] = useState([
     { id: 1, name: "John Doe", email: "john.doe@example.com" },
     { id: 2, name: "Jane Smith", email: "jane.smith@example.com" },
@@ -72,61 +71,29 @@ const CreateOneOnOne = () => {
   return (
     <div style={containerStyle}>
       {/* Left Column */}
-      <div style={columnStyle}>
-        <h2>Create One-on-One Meet</h2>
-        <div className="form-section">
-          <h3>Bulk Meeting</h3>
-          <label>Emails (Comma Separated)</label>
-          <textarea
-            name="bulkEmails"
-            rows="3"
-            placeholder="Enter emails separated by commas"
-            value={bulkMeetingDetails.emails}
-            onChange={(e) =>
-              setBulkMeetingDetails({ ...bulkMeetingDetails, emails: e.target.value })
-            }
-            style={bulkEmailInputStyle}
-          />
-          <label>Date & Time</label>
-          <input
-            type="datetime-local"
-            name="bulkDate"
-            value={bulkMeetingDetails.date}
-            onChange={(e) =>
-              setBulkMeetingDetails({ ...bulkMeetingDetails, date: e.target.value })
-            }
-          />
-          <button style={bulkButtonStyle} onClick={handleBulkCreateMeeting}>
-            Create Bulk Meetings
-          </button>
-        </div>
-      </div>
-
-      {/* Separator */}
-      <div style={separatorStyle}></div>
-
-      {/* Right Column */}
-      <div style={columnStyle}>
-        <h3>Selected Candidates</h3>
+      <div style={leftColumnStyle}>
+        <h2>Selected Candidates</h2>
         <div style={scrollContainerStyle}>
           <ul style={studentsListStyle}>
             {selectedStudents.map((student) => (
               <li key={student.id} style={studentsListItemStyle}>
                 <div style={candidateDetailsStyle}>
-                  <div style={{ flex: 1 }}>
-                    <span>{student.name} - {student.email}</span>
+                  <div>
+                    <strong>{student.name}</strong>
+                    <br />
+                    <span>{student.email}</span>
                   </div>
-                  <div style={{ flex: 2 }}>
+                  <div style={meetingControlsStyle}>
                     <input
                       type="datetime-local"
                       value={individualMeetingDetails[student.id].date}
                       onChange={(e) =>
                         handleIndividualDateChange(student.id, e.target.value)
                       }
-                      style={individualDateInputStyle}
+                      style={dateInputStyle}
                     />
                     <button
-                      style={createButtonStyle}
+                      style={buttonStyle}
                       onClick={() =>
                         handleIndividualCreateMeeting(student.id, student.email)
                       }
@@ -140,54 +107,75 @@ const CreateOneOnOne = () => {
           </ul>
         </div>
       </div>
+
+      {/* Right Column */}
+      <div style={rightColumnStyle}>
+        <h2>Create One-on-One Meet</h2>
+        <div style={formSectionStyle}>
+          <h3>Bulk Meeting</h3>
+          <label>Emails (Comma Separated)</label>
+          <textarea
+            placeholder="Enter emails separated by commas"
+            value={bulkMeetingDetails.emails}
+            onChange={(e) =>
+              setBulkMeetingDetails({ ...bulkMeetingDetails, emails: e.target.value })
+            }
+            style={textareaStyle}
+          />
+          <label>Date & Time</label>
+          <input
+            type="datetime-local"
+            value={bulkMeetingDetails.date}
+            onChange={(e) =>
+              setBulkMeetingDetails({ ...bulkMeetingDetails, date: e.target.value })
+            }
+            style={inputStyle}
+          />
+          <button style={buttonStyle} onClick={handleBulkCreateMeeting}>
+            Create Bulk Meetings
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
 
-// Inline Styles
+// Styles
 const containerStyle = {
   display: "flex",
-  justifyContent: "space-between",
-  alignItems: "flex-start",
-  width: "100%",
+  gap: "20px",
   padding: "20px",
+  backgroundColor: "#f4f4f4",
 };
 
-const columnStyle = {
+const leftColumnStyle = {
   flex: 1,
-  padding: "10px",
+  padding: "20px",
+  backgroundColor: "#fff",
+  borderRadius: "10px",
+  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
 };
 
-const separatorStyle = {
-  width: "2px",
-  backgroundColor: "#ccc",
-  margin: "0 20px",
-};
-
-const bulkEmailInputStyle = {
-  width: "100%",
-  padding: "10px",
-  margin: "10px 0",
-  border: "1px solid #ccc",
-  borderRadius: "5px",
+const rightColumnStyle = {
+  flex: 1,
+  padding: "20px",
+  backgroundColor: "#fff",
+  borderRadius: "10px",
+  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
 };
 
 const scrollContainerStyle = {
   maxHeight: "400px",
-  overflowY: "scroll",
-  padding: "5px",
-  border: "1px solid #ccc",
-  borderRadius: "5px",
+  overflowY: "auto",
 };
 
 const studentsListStyle = {
   listStyle: "none",
-  padding: "0",
-  margin: "0",
+  padding: 0,
 };
 
 const studentsListItemStyle = {
-  marginBottom: "10px",
+  marginBottom: "15px",
 };
 
 const candidateDetailsStyle = {
@@ -195,34 +183,53 @@ const candidateDetailsStyle = {
   justifyContent: "space-between",
   alignItems: "center",
   padding: "10px",
+  backgroundColor: "#f9f9f9",
+  borderRadius: "8px",
+  gap: "10px", // Add spacing between components
+};
+
+
+const meetingControlsStyle = {
+  display: "flex",
+  gap: "10px",
+};
+
+const formSectionStyle = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
+};
+
+const textareaStyle = {
+  width: "100%",
+  padding: "10px",
+  borderRadius: "8px",
   border: "1px solid #ddd",
-  borderRadius: "5px",
-  backgroundColor: "#ffffff",
-  color: "#333",
 };
 
-const bulkButtonStyle = {
-  backgroundColor: "#6c63ff",
-  color: "white",
-  border: "none",
-  padding: "10px 20px",
-  borderRadius: "5px",
-  cursor: "pointer",
-  marginTop: "10px",
+const inputStyle = {
+  width: "100%",
+  padding: "10px",
+  borderRadius: "8px",
+  border: "1px solid #ddd",
 };
 
-const individualDateInputStyle = {
-  marginRight: "10px",
-  padding: "5px",
-};
-
-const createButtonStyle = {
+const buttonStyle = {
+  padding: "10px 15px",
   backgroundColor: "#007bff",
-  color: "white",
+  color: "#fff",
+  borderRadius: "8px",
   border: "none",
-  padding: "5px 10px",
-  borderRadius: "3px",
   cursor: "pointer",
+  width: "120px", // Set a fixed width
+  textAlign: "center", // Ensure the text is centered
+};
+
+
+const dateInputStyle = {
+  padding: "8px",
+  borderRadius: "6px",
+  border: "1px solid #ccc",
 };
 
 export default CreateOneOnOne;
