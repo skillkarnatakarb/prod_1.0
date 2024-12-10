@@ -105,18 +105,8 @@ const Profile = () => {
     } else if (!/^\d{4}$/.test(formData.yearOfPassing)) {
       errors.yearOfPassing = "Year of passing must be a 4-digit year.";
     }
-    if (formData.github && !/^https?:\/\/github\.com\/.+$/.test(formData.github)) {
-      errors.github = "GitHub link is invalid.";
-    }
-    if (formData.linkedin && !/^https?:\/\/(www\.)?linkedin\.com\/.+$/.test(formData.linkedin)) {
-      errors.linkedin = "LinkedIn link is invalid.";
-    }
-    if (formData.twitter && !/^https?:\/\/(www\.)?twitter\.com\/.+$/.test(formData.twitter)) {
-      errors.twitter = "Twitter link is invalid.";
-    }
-    if (formData.resume && !/^https?:\/\/.+/.test(formData.resume)) {
-      errors.resume = "Resume link is invalid.";
-    }
+    
+
     return errors;
   };
 
@@ -141,54 +131,90 @@ const Profile = () => {
     <div className="profile-container">
       <form onSubmit={handleSubmit} className="profile-form">
         <h2>Personal Details</h2>
-        <div className="form-row">
-          <div className={`form-group ${errors.firstName ? "error-highlight" : ""}`}>
-            <label>First Name:</label>
-            <input
-              type="text"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              disabled={!isEditing}
-            />
-            {errors.firstName && <span className="error">{errors.firstName}</span>}
-          </div>
-          <div className={`form-group ${errors.lastName ? "error-highlight" : ""}`}>
-            <label>Last Name:</label>
-            <input
-              type="text"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              disabled={!isEditing}
-            />
-            {errors.lastName && <span className="error">{errors.lastName}</span>}
-          </div>
-        </div>
-        <div className="form-row">
-          <div className={`form-group ${errors.dob ? "error-highlight" : ""}`}>
-            <label>Date of Birth:</label>
-            <input
-              type="date"
-              name="dob"  
-              value={formData.dob}
-              onChange={handleChange}
-              disabled={!isEditing}
-            />
-            {errors.dob && <span className="error">{errors.dob}</span>}  
-          </div>
-          <div className={`form-group ${errors.phoneNumber ? "error-highlight" : ""}`}>
-            <label>Phone Number:</label>
-            <input
-              type="tel"
-              name="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-              disabled={!isEditing}
-            />
-            {errors.phoneNumber && <span className="error">{errors.phoneNumber}</span>}
-          </div>
-        </div>
+        
+
+        <div className="form-row" style={{ display: "flex", gap: "1rem" }}>
+  <div className={`form-group ${errors.firstName ? "error-highlight" : ""}`} style={{ flex: 1 }}>
+    <label>First Name:</label>
+    <input
+      type="text"
+      name="firstName"
+      value={formData.firstName}
+      onChange={handleChange}
+      disabled={!isEditing}
+    />
+    {errors.firstName && <span className="error">{errors.firstName}</span>}
+  </div>
+  <div className={`form-group ${errors.lastName ? "error-highlight" : ""}`} style={{ flex: 1 }}>
+    <label>Last Name:</label>
+    <input
+      type="text"
+      name="lastName"
+      value={formData.lastName}
+      onChange={handleChange}
+      disabled={!isEditing}
+    />
+    {errors.lastName && <span className="error">{errors.lastName}</span>}
+  </div>
+</div>
+
+<div className="form-row" style={{ display: "flex", gap: "1rem" }}>
+  <div className={`form-group ${errors.email ? "error-highlight" : ""}`} style={{ flex: 1 }}>
+    <label>Email:</label>
+    <input
+      type="email"
+      name="email"
+      value={formData.email}
+      onChange={handleChange}
+      disabled={!isEditing}
+    />
+    {errors.email && <span className="error">{errors.email}</span>}
+  </div>
+  <div className={`form-group ${errors.gender ? "error-highlight" : ""}`} style={{ flex: 1 }}>
+    <label>Gender:</label>
+    <select
+      name="gender"
+      value={formData.gender}
+      onChange={handleChange}
+      disabled={!isEditing}
+    >
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
+    {errors.gender && <span className="error">{errors.gender}</span>}
+  </div>
+</div>
+
+<div className="form-row" style={{ display: "flex", gap: "1rem" }}>
+  <div className={`form-group ${errors.dob ? "error-highlight" : ""}`} style={{ flex: 1 }}>
+    <label>Date of Birth:</label>
+    <input
+      type="date"
+      name="dob"
+      value={formData.dob}
+      onChange={handleChange}
+      disabled={!isEditing}
+    />
+    {errors.dob && <span className="error">{errors.dob}</span>}
+  </div>
+  <div className={`form-group ${errors.phoneNumber ? "error-highlight" : ""}`} style={{ flex: 1 }}>
+    <label>Phone Number:</label>
+    <input
+      type="tel"
+      name="phoneNumber"
+      value={formData.phoneNumber}
+      onChange={handleChange}
+      disabled={!isEditing}
+    />
+    {errors.phoneNumber && <span className="error">{errors.phoneNumber}</span>}
+  </div>
+</div>
+
+
+
+
+
+
         <h2>Address</h2>
         <div className="form-row">
           <div className={`form-group ${errors.address ? "error-highlight" : ""}`}>
@@ -203,6 +229,7 @@ const Profile = () => {
             {errors.address && <span className="error">{errors.address}</span>}
           </div>
         </div>
+        
         <div className="form-row">
           <div className={`form-group ${errors.state ? "error-highlight" : ""}`}>
             <label>State:</label>
