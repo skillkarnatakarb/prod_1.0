@@ -1,150 +1,143 @@
 import React, { useState } from "react";
 import {
-  AppBar,
-  Toolbar,
+  Box,
   Drawer,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
-  Box,
   IconButton,
+  Avatar,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SettingsIcon from "@mui/icons-material/Settings";
+import ContactMailIcon from "@mui/icons-material/ContactMail"; // Import ContactMailIcon
 import LogoutIcon from "@mui/icons-material/Logout";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
-const Sidebar = () => {
+const Sidebar = ({ role }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [active, setActive] = useState(""); // To track the active button
   const navigate = useNavigate();
+
+  const menuItems = {
+    student: [
+      { text: "Student Profile", path: "/student-dashboard/Student_profile", icon: <AccountCircleIcon /> },
+      { text: "Notification", path: "/student-dashboard/Notification", icon: <NotificationsIcon /> },
+      { text: "Settings", path: "/student-dashboard/Settings", icon: <SettingsIcon /> },
+      { text: "Contact Us", path: "/student-dashboard/ContactUs", icon: <ContactMailIcon /> },
+    ],
+    corporate: [
+      { text: "Corporate Profile", path: "/corporate-dashboard/Corporate_profile", icon: <AccountCircleIcon /> },
+      { text: "Notification", path: "/corporate-dashboard/Notification", icon: <NotificationsIcon /> },
+      { text: "Settings", path: "/corporate-dashboard/Settings", icon: <SettingsIcon /> },
+      { text: "Contact Us", path: "/corporate-dashboard/ContactUs", icon: <ContactMailIcon /> },
+    ],
+    college: [
+      { text: "College Profile", path: "/college-dashboard/College_profile", icon: <AccountCircleIcon /> },
+      { text: "Notification", path: "/college-dashboard/Notification", icon: <NotificationsIcon /> },
+      { text: "Settings", path: "/college-dashboard/Settings", icon: <SettingsIcon /> },
+      { text: "Contact Us", path: "/college-dashboard/ContactUs", icon: <ContactMailIcon /> },
+    ],
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const handleLogout = () => {
-    setActive(""); // Clear active state on logout
     localStorage.clear();
     navigate("/");
   };
 
   const drawerContent = (
     <Box sx={{ width: drawerWidth, p: 2 }}>
+      {/* Profile Section */}
+      <Box display="flex" alignItems="center" mb={2}>
+        <Avatar alt={role} sx={{ mr: 2 }}>
+          {role.charAt(0).toUpperCase()}
+        </Avatar>
+        <Box>
+          <strong>{role.charAt(0).toUpperCase() + role.slice(1)} Dashboard</strong>
+        </Box>
+      </Box>
+
+      {/* Menu Items */}
       <List>
-        {[
-          { text: "Profile", icon: <AccountCircleIcon />, path: "/profile" },
-          { text: "Notifications", icon: <NotificationsIcon />, path: "/notifications" },
-          { text: "Settings", icon: <SettingsIcon />, path: "/settings" },
-          { text: "Logout", icon: <LogoutIcon />, action: handleLogout },
-        ].map((item, index) => (
+        {menuItems[role]?.map((item, index) => (
           <ListItem
             button
             key={index}
-            onClick={() => {
-              setActive(item.text); // Set active item
-              if (item.path) {
-                navigate(item.path);
-              } else if (item.action) {
-                item.action();
-              }
-            }}
+            onClick={() => navigate(item.path)}
             sx={{
-              backgroundColor: active === item.text ? "#f0f0f0" : "transparent", // Active background color
-              "&:hover": {
-                backgroundColor: active === item.text ? "#f0f0f0" : "#e0e0e0", // Hover behavior
-              },
-              borderRadius: "8px",
               mb: 1,
+              borderRadius: "8px",
+              "&:hover": { backgroundColor: "#e0e0e0" },
             }}
           >
-            <ListItemIcon
-              sx={{
-                color: active === item.text ? "#1976d2" : "#000", // Active icon color
-                fontSize: 30,
-              }}
-            >
-              {item.icon}
-            </ListItemIcon>
-            <ListItemText
-              primary={item.text}
-              sx={{
-                color: active === item.text ? "#1976d2" : "#000", // Active text color
-              }}
-            />
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.text} />
           </ListItem>
         ))}
+        <ListItem
+          button
+          onClick={handleLogout}
+          sx={{ mt: 2, borderRadius: "8px", backgroundColor: "#f0f0f0" }}
+        >
+          <ListItemIcon>
+            <LogoutIcon />
+          </ListItemIcon>
+          <ListItemText primary="Logout" />
+        </ListItem>
       </List>
     </Box>
   );
 
   return (
     <Box sx={{ display: "flex" }}>
-      {/* AppBar */}
-      <AppBar
-        position="fixed"
+      {/* Sidebar Header */}
+      <Box
         sx={{
-          backgroundColor: "#fff",
-          boxShadow: "none",
-          zIndex: (theme) => theme.zIndex.drawer + 1,
+          width: "100%",
+          height: "60px",
+          backgroundColor: "#1976d2",
+          display: "flex",
+          alignItems: "center",
+          padding: "0 16px",
         }}
       >
-        <Toolbar
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "0 16px",
-          }}
-        >
-          {/* Logo */}
-          <Box
-            component="img"
-            src="/Assets/amazon.png" // Correct path
-            alt="Logo"
-            sx={{
-              height: 50, // Adjust height if needed
-              width: "auto", // Preserve aspect ratio
-              cursor: "pointer",
-              display: "block",
-              backgroundColor: "#ddd",
-            }}
-            onClick={() => navigate("/corporate-dashboard/schedule")}
-          />
+        {/* Dashboard Title */}
+        <Box sx={{ fontWeight: "bold", fontSize: "18px", color: "#fff" }}>
+          {role.toUpperCase()} DASHBOARD
+        </Box>
 
-          {/* Menu Button */}
+        {/* Menu Icon */}
+        <Box sx={{ marginLeft: "auto" }}>
           <IconButton
             color="inherit"
-            edge="end"
             onClick={handleDrawerToggle}
             sx={{
               fontSize: 30,
-              color: "#000",
+              color: "#fff",
             }}
           >
             <MenuIcon />
           </IconButton>
-        </Toolbar>
-      </AppBar>
+        </Box>
+      </Box>
 
-      {/* Right Sidebar Drawer */}
+      {/* Drawer */}
       <Drawer
         anchor="right"
         variant="temporary"
         open={mobileOpen}
         onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true,
-        }}
+        ModalProps={{ keepMounted: true }}
         sx={{
-          "& .MuiDrawer-paper": {
-            boxSizing: "border-box",
-            width: drawerWidth,
-          },
+          "& .MuiDrawer-paper": { width: drawerWidth },
         }}
       >
         {drawerContent}
