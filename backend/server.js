@@ -33,7 +33,8 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api/auth', authRoutes); // Authentication routes
 app.use('/api/roles', roleRoutes); // Role-based routes
 app.use('/api/events', eventRoutes); // Event routes
-app.use('/api/projects', projectRoutes); // Project routes
+app.use("/api/projects", projectRoutes);
+// Project routes
 
 // Debug Log: Show loaded environment variables in development mode
 if (process.env.NODE_ENV === 'development') {

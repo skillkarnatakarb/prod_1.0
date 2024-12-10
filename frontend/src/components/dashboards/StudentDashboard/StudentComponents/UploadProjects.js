@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Button, Card, CardContent, Typography, Box, Grid, Alert, Dialog, DialogTitle, DialogContent } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  Typography,
+  Box,
+  Grid,
+  Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+} from "@mui/material";
 import { fetchProjects, uploadProject, deleteProject } from "../../../../api/api";
+
+
+
 
 const UploadProjects = () => {
   const [projects, setProjects] = useState([]); // State to store projects
@@ -127,10 +142,10 @@ const UploadProjects = () => {
       </Typography>
       <Grid container spacing={3}>
         {projects.map((project, index) => (
-          <Grid item xs={12} sm={6} md={3} key={index}> {/* 4 cards in a row */}
+          <Grid item xs={12} sm={6} md={3} key={index}>
             <Card
               sx={{
-                boxShadow: 4, // Add shadow
+                boxShadow: 4,
                 borderRadius: "12px",
                 padding: "15px",
                 display: "flex",
